@@ -39,7 +39,7 @@ describe('PessoaFisicaController (e2e)', () => {
             .post('/pessoa-fisica/cadastro')
             .send({
                 nome: 'João',
-                cpf: '11111111111',
+                cpf: '1111111111',
                 email: 'joao@email.com',
                 dataNascimento: '1990-01-01',
             })
