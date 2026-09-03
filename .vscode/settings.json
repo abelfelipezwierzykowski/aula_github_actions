@@ -1,0 +1,8 @@
+{
+    "chat.tools.terminal.autoApprove": {
+        "/^cd C:/Users/55429/Documents/GitHub/aula_github_actions; npx jest src/pessoa-fisica/pessoa-fisica\\.service\\.spec\\.ts --runInBand --watch=false --verbose$/": {
+            "approve": true,
+            "matchCommandLine": true
+        }
+    }
+}
