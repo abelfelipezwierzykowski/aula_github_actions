@@ -9,7 +9,6 @@ on:
 jobs:
   testar:
     runs-on: ubuntu-latest
-
     steps:
       - name: Baixar o código
         uses: actions/checkout@v4
@@ -19,8 +18,5 @@ jobs:
         with:
           node-version: 20
 
-      - name: Instalar dependências
-        run: npm ci
-
-      - name: Rodar os testes
-        run: npm test
+      - name: Rodar a suíte
+        run: node --test

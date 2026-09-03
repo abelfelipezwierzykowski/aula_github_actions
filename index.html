@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cadastro de Pessoa Física — Aula 08/09</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 480px;
+      margin: 40px auto;
+      padding: 0 16px;
+      color: #222;
+    }
+
+    h1 {
+      font-size: 1.4rem;
+    }
+
+    label {
+      display: block;
+      margin-top: 12px;
+      font-weight: bold;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="date"] {
+      width: 100%;
+      padding: 8px;
+      margin-top: 4px;
+      box-sizing: border-box;
+      border: 1px solid #bbb;
+      border-radius: 4px;
+    }
+
+    .cnh {
+      margin-top: 12px;
+    }
+
+    .cnh label {
+      display: inline;
+      font-weight: normal;
+    }
+
+    button {
+      margin-top: 16px;
+      padding: 10px 24px;
+      border: none;
+      border-radius: 4px;
+      background: #2c5f2d;
+      color: #fff;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #234b24;
+    }
+
+    #resultado {
+      margin-top: 20px;
+      padding: 12px;
+      border-radius: 4px;
+      display: none;
+    }
+
+    #resultado.erro {
+      display: block;
+      background: #fdecea;
+      border: 1px solid #c0392b;
+      color: #c0392b;
+    }
+
+    #resultado.ok {
+      display: block;
+      background: #eafaf1;
+      border: 1px solid #1e8449;
+      color: #1e8449;
+    }
+
+    #resultado ul {
+      margin: 8px 0 0;
+      padding-left: 20px;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Cadastro de Pessoa Física</h1>
+  <p>Validação da Aula 08 — os mesmos validadores da suíte de testes.</p>
+
+  <form id="formulario" novalidate>
+    <label for="nome">Nome completo</label>
+    <input type="text" id="nome" placeholder="Ana Maria Souza">
+
+    <label for="cpf">CPF</label>
+    <input type="text" id="cpf" placeholder="529.982.247-25">
+
+    <label for="email">E-mail</label>
+    <input type="email" id="email" placeholder="ana.souza@escola.com.br">
+
+    <label for="data_nascimento">Data de nascimento</label>
+    <input type="date" id="data_nascimento">
+
+    <div class="cnh">
+      <input type="checkbox" id="possui_cnh">
+      <label for="possui_cnh">Possui CNH</label>
+    </div>
+
+    <button type="submit">Cadastrar</button>
+  </form>
+
+
+  <div id="resultado"></div>
+
+  <script src="pessoaFisica.js"></script>
+  <script>
+    const formulario = document.getElementById('formulario');
+    const resultado = document.getElementById('resultado');
+
+    formulario.addEventListener('submit', (evento) => {
+      evento.preventDefault();
+
+      const pessoa = {
+        nome: document.getElementById('nome').value,
+        cpf: document.getElementById('cpf').value,
+        email: document.getElementById('email').value,
+        data_nascimento: document.getElementById('data_nascimento').value,
+        possui_cnh: document.getElementById('possui_cnh').checked,
+      };
+
+      const erros = validar(pessoa);
+
+      if (erros.length) {
+        resultado.className = 'erro';
+        resultado.innerHTML = '<strong>Corrija os campos abaixo:</strong><ul>' +
+          erros.map((e) => '<li>' + e + '</li>').join('') + '</ul>';
+      } else {
+        resultado.className = 'ok';
+        resultado.textContent = 'Cadastro válido! ' + pessoa.nome.trim() + ' pode ser salvo.';
+      }
+    });
+  </script>
+</body>
+
+</html>
