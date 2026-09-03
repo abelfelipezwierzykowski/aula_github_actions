@@ -3,7 +3,7 @@ import { PessoaFisicaService } from './pessoa-fisica.service';
 describe('PessoaFisicaService', () => {
     const service = new PessoaFisicaService();
 
-    const cpfValido = '52998224721';
+    const cpfValido = '5299822472';
 
     const dadosValidos = {
         nome: 'Maria Oliveira',
