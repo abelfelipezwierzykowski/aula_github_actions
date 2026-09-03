@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cadastro de Pessoa Física</title>
+    <style>
+        :root {
+            --bg: #f5f7fb;
+            --card: #ffffff;
+            --primary: #1f6feb;
+            --danger: #d93025;
+            --success: #188038;
+            --text: #1f2937;
+            --muted: #6b7280;
+            --border: #dfe3e8;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+        }
+
+        .container {
+            max-width: 760px;
+            margin: 48px auto;
+            padding: 24px;
+        }
+
+        .card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 28px;
+            box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+        }
+
+        h1 {
+            margin-top: 0;
+            margin-bottom: 8px;
+            font-size: 2rem;
+        }
+
+        .subtitle {
+            margin-top: 0;
+            margin-bottom: 24px;
+            color: var(--muted);
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 18px;
+        }
+
+        .field {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .field.full {
+            grid-column: 1 / -1;
+        }
+
+        label {
+            font-weight: 600;
+        }
+
+        input,
+        select,
+        button {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            font-size: 1rem;
+        }
+
+        input:focus,
+        select:focus {
+            outline: 2px solid rgba(31, 111, 235, 0.2);
+            border-color: var(--primary);
+        }
+
+        .checkbox-wrap {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 18px;
+        }
+
+        .checkbox-wrap input {
+            width: auto;
+        }
+
+        .actions {
+            margin-top: 28px;
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+        button.secondary {
+            background: #eef2ff;
+            color: #1e3a8a;
+        }
+
+        #resultado {
+            margin-top: 24px;
+            padding: 14px 16px;
+            border-radius: 12px;
+            display: none;
+        }
+
+        #resultado.erro {
+            display: block;
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            color: #991b1b;
+        }
+
+        #resultado.sucesso {
+            display: block;
+            background: #ecfdf5;
+            border: 1px solid #a7f3d0;
+            color: var(--success);
+        }
+
+        #resultado ul {
+            margin: 10px 0 0 18px;
+            padding: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="card">
+            <h1>Cadastro de Pessoa Física</h1>
+            <p class="subtitle">Preencha os dados abaixo para validar o cadastro.</p>
+
+            <form id="formCadastro">
+                <div class="form-grid">
+                    <div class="field full">
+                        <label for="nome">Nome</label>
+                        <input id="nome" name="nome" type="text" placeholder="Ex: Ana Maria Souza" />
+                    </div>
+
+                    <div class="field">
+                        <label for="cpf">CPF</label>
+                        <input id="cpf" name="cpf" type="text" maxlength="14" placeholder="000.000.000-00" />
+                    </div>
+
+                    <div class="field">
+                        <label for="email">E-mail</label>
+                        <input id="email" name="email" type="email" placeholder="nome@email.com" />
+                    </div>
+
+                    <div class="field">
+                        <label for="data_nascimento">Data de nascimento</label>
+                        <input id="data_nascimento" name="data_nascimento" type="date" />
+                    </div>
+
+                    <div class="field">
+                        <label for="telefone">Telefone</label>
+                        <input id="telefone" name="telefone" type="tel" maxlength="15" placeholder="(11) 99999-8888" />
+                    </div>
+
+                    <div class="field">
+                        <label for="estado">Estado</label>
+                        <select id="estado" name="estado">
+                            <option value="">Selecione</option>
+                            <option value="SP">SP</option>
+                            <option value="RJ">RJ</option>
+                            <option value="MG">MG</option>
+                            <option value="RS">RS</option>
+                            <option value="PR">PR</option>
+                        </select>
+                    </div>
+
+                    <div class="field full">
+                        <label for="rua">Rua</label>
+                        <input id="rua" name="rua" type="text" placeholder="Ex: Rua das Flores" />
+                    </div>
+
+                    <div class="field">
+                        <label for="numero">Número</label>
+                        <input id="numero" name="numero" type="text" placeholder="123" />
+                    </div>
+
+                    <div class="field">
+                        <label for="cidade">Cidade</label>
+                        <input id="cidade" name="cidade" type="text" placeholder="Ex: São Paulo" />
+                    </div>
+
+                    <div class="field full">
+                        <div class="checkbox-wrap">
+                            <input id="possui_cnh" name="possui_cnh" type="checkbox" />
+                            <label for="possui_cnh">Possui CNH</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="actions">
+                    <button type="submit">Cadastrar</button>
+                    <button type="button" class="secondary" id="preencherValido">Usar dados válidos</button>
+                </div>
+            </form>
+
+            <div id="resultado" aria-live="polite"></div>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('formCadastro');
+        const resultado = document.getElementById('resultado');
+        const preencherValido = document.getElementById('preencherValido');
+
+        function formatarCpf(value) {
+            const digits = value.replace(/\D/g, '').slice(0, 11);
+            return digits.replace(/(\d{3})(\d)/, '$1.$2')
+                .replace(/(\d{3})\.(\d{3})(\d)/, '$1.$2.$3')
+                .replace(/(\d{3})\.(\d{3})\.(\d{3})(\d)/, '$1.$2.$3-$4');
+        }
+
+        function formatarTelefone(value) {
+            const digits = value.replace(/\D/g, '').slice(0, 11);
+
+            if (digits.length <= 10) {
+                return digits.replace(/(\d{2})(\d)/, '($1) $2')
+                    .replace(/\(\d{2}\)\s(\d{4})(\d)/, '($1) $2-$3');
+            }
+
+            return digits.replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3');
+        }
+
+        document.getElementById('cpf').addEventListener('input', (event) => {
+            event.target.value = formatarCpf(event.target.value);
+        });
+
+        document.getElementById('telefone').addEventListener('input', (event) => {
+            event.target.value = formatarTelefone(event.target.value);
+        });
+
+        preencherValido.addEventListener('click', () => {
+            document.getElementById('nome').value = 'Ana Maria Souza';
+            document.getElementById('cpf').value = '529.982.247-25';
+            document.getElementById('email').value = 'ana.maria@email.com';
+            document.getElementById('data_nascimento').value = '1998-03-14';
+            document.getElementById('telefone').value = '(11) 99999-8888';
+            document.getElementById('rua').value = 'Avenida Paulista';
+            document.getElementById('numero').value = '1000';
+            document.getElementById('cidade').value = 'São Paulo';
+            document.getElementById('estado').value = 'SP';
+            document.getElementById('possui_cnh').checked = false;
+            limparResultado();
+        });
+
+        function limparResultado() {
+            resultado.className = '';
+            resultado.innerHTML = '';
+            resultado.style.display = 'none';
+        }
+
+        function mostrarErro(mensagens) {
+            resultado.className = 'erro';
+            resultado.style.display = 'block';
+            resultado.innerHTML = '<strong>Erros encontrados:</strong><ul>' + mensagens.map((item) => `<li>${item}</li>`).join('') + '</ul>';
+        }
+
+        function mostrarSucesso() {
+            resultado.className = 'sucesso';
+            resultado.style.display = 'block';
+            resultado.textContent = 'Cadastro válido!';
+        }
+
+        function validarCPF(cpf) {
+            const digits = cpf.replace(/\D/g, '');
+
+            if (!/^\d{11}$/.test(digits)) return false;
+            if (/^(\d)\1{10}$/.test(digits)) return false;
+
+            let soma = 0;
+            for (let i = 0; i < 9; i += 1) {
+                soma += Number(digits[i]) * (10 - i);
+            }
+
+            let digito1 = (soma * 10) % 11;
+            if (digito1 === 10) digito1 = 0;
+
+            if (digito1 !== Number(digits[9])) return false;
+
+            soma = 0;
+            for (let i = 0; i < 10; i += 1) {
+                soma += Number(digits[i]) * (11 - i);
+            }
+
+            let digito2 = (soma * 10) % 11;
+            if (digito2 === 10) digito2 = 0;
+
+            return digito2 === Number(digits[10]);
+        }
+
+        function calcularIdade(dataNascimento) {
+            const hoje = new Date();
+            const data = new Date(dataNascimento);
+            let idade = hoje.getFullYear() - data.getFullYear();
+            const m = hoje.getMonth() - data.getMonth();
+
+            if (m < 0 || (m === 0 && hoje.getDate() < data.getDate())) {
+                idade -= 1;
+            }
+
+            return idade;
+        }
+
+        form.addEventListener('submit', (event) => {
+            event.preventDefault();
+
+            const dados = {
+                nome: document.getElementById('nome').value,
+                cpf: document.getElementById('cpf').value,
+                email: document.getElementById('email').value,
+                data_nascimento: document.getElementById('data_nascimento').value,
+                telefone: document.getElementById('telefone').value,
+                rua: document.getElementById('rua').value,
+                numero: document.getElementById('numero').value,
+                cidade: document.getElementById('cidade').value,
+                estado: document.getElementById('estado').value,
+                possui_cnh: document.getElementById('possui_cnh').checked,
+            };
+
+            const erros = [];
+
+            if (!dados.nome.trim()) {
+                erros.push('nome: obrigatório');
+            }
+
+            const cpfDigits = dados.cpf.replace(/\D/g, '');
+            if (!cpfDigits) {
+                erros.push('cpf: obrigatório');
+            } else if (!validarCPF(dados.cpf)) {
+                erros.push('cpf: invalido');
+            }
+
+            if (!dados.email.trim()) {
+                erros.push('email: obrigatório');
+            } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(dados.email)) {
+                erros.push('email: invalido');
+            }
+
+            if (!dados.data_nascimento) {
+                erros.push('data_nascimento: obrigatória');
+            } else {
+                const hoje = new Date();
+                const nascimento = new Date(dados.data_nascimento + 'T00:00:00');
+
+                if (nascimento > hoje) {
+                    erros.push('data_nascimento: nao pode estar no futuro');
+                }
+
+                if (dados.possui_cnh && calcularIdade(dados.data_nascimento) < 18) {
+                    erros.push('possui_cnh: so a partir de 18 anos');
+                }
+            }
+
+            if (!dados.telefone.trim()) {
+                erros.push('telefone: obrigatório');
+            }
+
+            if (!dados.rua.trim()) {
+                erros.push('rua: obrigatória');
+            }
+
+            if (!dados.numero.trim()) {
+                erros.push('numero: obrigatório');
+            }
+
+            if (!dados.cidade.trim()) {
+                erros.push('cidade: obrigatória');
+            }
+
+            if (!dados.estado) {
+                erros.push('estado: obrigatório');
+            }
+
+            if (erros.length > 0) {
+                mostrarErro(erros);
+                return;
+            }
+
+            mostrarSucesso();
+        });
+    </script>
+</body>
+
+</html>
