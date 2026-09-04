@@ -10,10 +10,10 @@ const assert = require('node:assert/strict');
 // 3. O CÓDIGO SOB TESTE: a função que queremos verificar
 const { cpfValido } = require('./pessoaFisica');
 
-test('teste de cpf invalido teste', () => {
+test('teste de cpf invalido testeeeeee', () => {
   assert.equal(cpfValido('12345678912'), false);
 });
 
 test('teste de cpf invalido', () => {
-  assert.equal(cpfValido('071446760033'), true);
+  assert.equal(cpfValido('07144676008'), true);
 });
