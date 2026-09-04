@@ -11,7 +11,7 @@ const assert = require('node:assert/strict');
 const { cpfValido } = require('./pessoaFisica');
 
 test('teste de cpf invalido teste', () => {
-  assert.equal(cpfValido('12345678912'), false);
+  assert.equal(cpfValido('12345678911'), false);
 });
 
 test('teste de cpf invalido', () => {
