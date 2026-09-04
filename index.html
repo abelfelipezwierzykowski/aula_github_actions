@@ -6,78 +6,159 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cadastro de Pessoa Física — Aula 08/09</title>
   <style>
+    :root {
+      --bg: #f3f7ff;
+      --card: #ffffff;
+      --primary: #3b82f6;
+      --primary-dark: #1d4ed8;
+      --success-bg: #eafaf1;
+      --success-text: #1e8449;
+      --error-bg: #fdecea;
+      --error-text: #c0392b;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --border: #dbe3f0;
+      --shadow: rgba(15, 23, 42, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
     body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 24px 16px;
       font-family: Arial, sans-serif;
-      max-width: 480px;
-      margin: 40px auto;
-      padding: 0 16px;
-      color: #222;
+      background: linear-gradient(135deg, #eef5ff 0%, #dfeafe 100%);
+      color: var(--text);
+    }
+
+    #box {
+      width: min(100%, 560px);
+      background: var(--card);
+      padding: 28px 26px 30px;
+      border-radius: 22px;
+      box-shadow: 0 18px 40px var(--shadow);
+      border: 1px solid rgba(59, 130, 246, 0.1);
     }
 
     h1 {
-      font-size: 1.4rem;
+      margin: 0 0 10px;
+      font-size: clamp(1.6rem, 2vw, 2.2rem);
+      color: var(--text);
+      text-align: center;
+    }
+
+    p {
+      margin: 0 0 20px;
+      color: var(--muted);
+      line-height: 1.5;
+      text-align: center;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
     }
 
     label {
       display: block;
-      margin-top: 12px;
-      font-weight: bold;
+      margin-top: 8px;
+      font-weight: 700;
+      color: var(--text);
+      font-size: 0.95rem;
     }
 
     input[type="text"],
     input[type="email"],
     input[type="date"] {
       width: 100%;
-      padding: 8px;
-      margin-top: 4px;
-      box-sizing: border-box;
-      border: 1px solid #bbb;
-      border-radius: 4px;
+      padding: 12px 14px;
+      margin-top: 6px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      font-size: 1rem;
+      background: #f9fbff;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    input[type="date"]:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+      background: #fff;
     }
 
     .cnh {
-      margin-top: 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 14px;
+      padding: 6px 0;
     }
 
-    .cnh label {
-      display: inline;
-      font-weight: normal;
-    }
-
-    button {
-      margin-top: 16px;
-      padding: 10px 24px;
-      border: none;
-      border-radius: 4px;
-      background: #ff0000;
-      color: #fff;
-      font-size: 1rem;
+    .cnh input {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--primary);
       cursor: pointer;
     }
 
+    .cnh label {
+      margin: 0;
+      font-weight: 600;
+      color: var(--text);
+      display: inline;
+    }
+
+    button {
+      margin-top: 18px;
+      padding: 12px 22px;
+      border: none;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 12px 22px rgba(59, 130, 246, 0.25);
+    }
+
     button:hover {
-      background: #234b24;
+      transform: translateY(-1px);
+      box-shadow: 0 14px 26px rgba(59, 130, 246, 0.3);
     }
 
     #resultado {
+      width: min(100%, 560px);
       margin-top: 20px;
-      padding: 12px;
-      border-radius: 4px;
+      padding: 14px 16px;
+      border-radius: 12px;
       display: none;
+      line-height: 1.5;
     }
 
     #resultado.erro {
       display: block;
-      background: #fdecea;
-      border: 1px solid #c0392b;
-      color: #c0392b;
+      background: var(--error-bg);
+      border: 1px solid #f1b7b0;
+      color: var(--error-text);
     }
 
     #resultado.ok {
       display: block;
-      background: #eafaf1;
-      border: 1px solid #1e8449;
-      color: #1e8449;
+      background: var(--success-bg);
+      border: 1px solid #9fe0b2;
+      color: var(--success-text);
     }
 
     #resultado ul {
@@ -88,60 +169,169 @@
 </head>
 
 <body>
-  <h1>Cadastro de Pessoa Física</h1>
-  <p>Validação da Aula 08 — os mesmos validadores da suíte de testes.</p>
+  <div id='box'>
+    <h1>Cadastro de Pessoa Física do
+      Abel
+    </h1>
+    <p>Validação da Aula 08 — os mesmos validadores da suíte de testes.</p>
 
-  <form id="formulario" novalidate>
-    <label for="nome">Nome completo</label>
-    <input type="text" id="nome" placeholder="Ana Maria Souza">
+    <form id="formulario" novalidate>
+      <label for="nome">Abel Felipe Zwierzykowski </label>
+      <input type="text" id="nome" placeholder="Ana Maria Souza">
 
-    <label for="cpf">CPF</label>
-    <input type="text" id="cpf" placeholder="529.982.247-25">
+      <label for="cpf">CPF</label>
+      <input type="text" id="cpf" placeholder="000.000.000-00">
 
-    <label for="email">E-mail</label>
-    <input type="email" id="email" placeholder="ana.souza@escola.com.br">
+      <label for="email">E-mail</label>
+      <input type="email" id="email" placeholder="ana.souza@email.com">
 
-    <label for="data_nascimento">Data de nascimento</label>
-    <input type="date" id="data_nascimento">
+      <label for="data-nascimento">Data de Nascimento</label>
+      <input type="date" id="data-nascimento">
 
-    <div class="cnh">
-      <input type="checkbox" id="possui_cnh">
-      <label for="possui_cnh">Possui CNH</label>
+      <div class="cnh">
+        <input type="checkbox" id="possui-cnh">
+        <label for="possui-cnh">Possui CNH?</label>
+      </div>
+
+      <div id="campos-cnh" style="display: none;">
+        <label for="numero-cnh">Número da CNH</label>
+        <input type="text" id="numero-cnh" placeholder="CNH número">
+
+        <label for="validade-cnh">Validade da CNH</label>
+        <input type="date" id="validade-cnh">
+      </div>
+
+      <button type="submit">Cadastrar</button>
+    </form>
+
+    <div id="resultado" class="">
+      <strong>Erro:</strong>
+      <ul>
+        <li>Mensagem de erro 1</li>
+        <li>Mensagem de erro 2</li>
+      </ul>
     </div>
+  </div>
 
-    <button type="submit">Cadastrar</button>
-  </form>
-
-
-  <div id="resultado"></div>
-
-  <script src="pessoaFisica.js"></script>
   <script>
-    const formulario = document.getElementById('formulario');
-    const resultado = document.getElementById('resultado');
-
-    formulario.addEventListener('submit', (evento) => {
-      evento.preventDefault();
-
-      const pessoa = {
-        nome: document.getElementById('nome').value,
-        cpf: document.getElementById('cpf').value,
-        email: document.getElementById('email').value,
-        data_nascimento: document.getElementById('data_nascimento').value,
-        possui_cnh: document.getElementById('possui_cnh').checked,
-      };
-
-      const erros = validar(pessoa);
-
-      if (erros.length) {
-        resultado.className = 'erro';
-        resultado.innerHTML = '<strong>Corrija os campos abaixo:</strong><ul>' +
-          erros.map((e) => '<li>' + e + '</li>').join('') + '</ul>';
+    document.getElementById('possui-cnh').addEventListener('change', function () {
+      const camposCnh = document.getElementById('campos-cnh');
+      if (this.checked) {
+        camposCnh.style.display = 'block';
+        document.getElementById('numero-cnh').setAttribute('required', 'required');
+        document.getElementById('validade-cnh').setAttribute('required', 'required');
       } else {
-        resultado.className = 'ok';
-        resultado.textContent = 'Cadastro válido! ' + pessoa.nome.trim() + ' pode ser salvo.';
+        camposCnh.style.display = 'none';
+        document.getElementById('numero-cnh').removeAttribute('required');
+        document.getElementById('validade-cnh').removeAttribute('required');
       }
     });
+
+    document.getElementById('formulario').addEventListener('submit', function (event) {
+      event.preventDefault();
+      const resultado = document.getElementById('resultado');
+      resultado.style.display = 'block';
+      resultado.className = '';
+
+      const nome = document.getElementById('nome').value;
+      const cpf = document.getElementById('cpf').value;
+      const email = document.getElementById('email').value;
+      const dataNascimento = document.getElementById('data-nascimento').value;
+      const possuiCnh = document.getElementById('possui-cnh').checked;
+      let numeroCnh = '';
+      let validadeCnh = '';
+
+      if (possuiCnh) {
+        numeroCnh = document.getElementById('numero-cnh').value;
+        validadeCnh = document.getElementById('validade-cnh').value;
+      }
+
+      let erros = [];
+
+      if (!nome) {
+        erros.push('O campo "Nome" é obrigatório.');
+      }
+
+      if (!cpf) {
+        erros.push('O campo "CPF" é obrigatório.');
+      } else if (!validaCPF(cpf)) {
+        erros.push('O CPF informado é inválido.');
+      }
+
+      if (!email) {
+        erros.push('O campo "E-mail" é obrigatório.');
+      } else if (!validaEmail(email)) {
+        erros.push('O E-mail informado é inválido.');
+      }
+
+      if (!dataNascimento) {
+        erros.push('O campo "Data de Nascimento" é obrigatório.');
+      } else if (!validaDataNascimento(dataNascimento)) {
+        erros.push('A data de nascimento deve ser maior que 18 anos.');
+      }
+
+      if (possuiCnh) {
+        if (!numeroCnh) {
+          erros.push('O campo "Número da CNH" é obrigatório.');
+        }
+
+        if (!validadeCnh) {
+          erros.push('O campo "Validade da CNH" é obrigatório.');
+        } else if (!validaData(validadeCnh)) {
+          erros.push('A validade da CNH é inválida.');
+        }
+      }
+
+      if (erros.length > 0) {
+        resultado.classList.add('erro');
+        resultado.classList.remove('ok');
+        resultado.innerHTML = '<strong>Erro:</strong><ul><li>' + erros.join('</li><li>') + '</li></ul>';
+      } else {
+        resultado.classList.add('ok');
+        resultado.classList.remove('erro');
+        resultado.innerHTML = '<strong>Sucesso:</strong> Cadastro realizado com sucesso!';
+      }
+    });
+
+    function validaCPF(cpf) {
+      cpf = cpf.replace(/[^\d]+/g, '');
+      if (cpf.length !== 11) return false;
+      let soma = 0;
+      let Resto;
+      for (let i = 1; i <= 9; i++) {
+        soma += parseInt(cpf.substring(i - 1, i)) * (11 - i);
+      }
+      Resto = 11 - (soma % 11);
+      if (Resto === 10 || Resto === 11) Resto = 0;
+      if (Resto !== parseInt(cpf.substring(9, 10))) return false;
+      soma = 0;
+      for (let i = 1; i <= 10; i++) {
+        soma += parseInt(cpf.substring(i - 1, i)) * (12 - i);
+      }
+      Resto = 11 - (soma % 11);
+      if (Resto === 10 || Resto === 11) Resto = 0;
+      if (Resto !== parseInt(cpf.substring(10, 11))) return false;
+      return true;
+    }
+
+    function validaEmail(email) {
+      const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return re.test(String(email).toLowerCase());
+    }
+
+    function validaDataNascimento(dataNascimento) {
+      const hoje = new Date();
+      const dataNasc = new Date(dataNascimento);
+      const idade = hoje.getFullYear() - dataNasc.getFullYear();
+      const m = hoje.getMonth() - dataNasc.getMonth();
+      return (idade > 18 || (idade === 18 && m >= 0));
+    }
+
+    function validaData(data) {
+      const hoje = new Date();
+      const dataVal = new Date(data);
+      return dataVal > hoje;
+    }
   </script>
 </body>
 
