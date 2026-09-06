@@ -11,7 +11,7 @@ const HOJE = new Date(Date.UTC(2026, 7, 28)); // 2026-08-28
 // Fábrica: cadastro válido; cada teste muda só o campo que quer testar
 const pessoa = (mudancas = {}) => ({
   nome: 'Ana Maria Souza',
-  cpf: '529.982.247-2',
+  cpf: '529.982.247-25',
   email: 'ana.souza@escola.com.br',
   data_nascimento: '1998-03-14',
   possui_cnh: true,
